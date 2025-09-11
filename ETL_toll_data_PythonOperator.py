@@ -72,7 +72,7 @@ def consolidate_data():
     df.append(pd.read_csv('/home/project/airflow/dags/python_etl/staging/tsv_data.csv'))
     df.append(pd.read_csv('/home/project/airflow/dags/python_etl/staging/fixed_width_data.csv'))
 
-    combined_df = pd.concat(df, ignore_index=True)
+    combined_df = pd.concat(df, axis=1, sort=False)
     combined_df.to_csv('/home/project/airflow/dags/python_etl/staging/extracted_data.csv', index=False)
 
 
@@ -81,7 +81,7 @@ def transform_data():
 
     df[df.columns[3]] =  df[df.columns[3]].str.upper()
 
-    df.to_csv('/home/project/airflow/dags/python_etl/staging/transformed_data.csv')
+    df.to_csv('/home/project/airflow/dags/python_etl/staging/transformed_data.csv', index=False)
 
 
 download_dataset = PythonOperator(
